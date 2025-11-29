@@ -99,6 +99,7 @@ Testing tips — why tests might not run locally for you
 -----------------------------------------------------
 - Chrome binary missing — WebDriverManager downloads the chromedriver but needs the Chrome browser binary installed.
 - DB/Redis services not available — tests that use these will either fail or skip depending on how you configure them. The sample `DBConnector` / `RedisClient` log errors and avoid failing the whole run, but to demonstrate data-driven tests you should spin up DB/Redis.
+ - DB config — you can keep credentials and URL in `src/test/resources/test-config.properties` (the project uses this file by default when you use the "default" keyword in DB scenarios). Edit `test-config.properties` to match your local setup (DB URL, user, password).
 - Allure CLI not installed — you can still collect the results (target/allure-results) and generate the report later.
 
 Screenshots & evidence to capture for your submission (VIVA + GitHub)

@@ -6,7 +6,7 @@ To generate an Allure HTML report from results produced by this project:
 
 ```powershell
 mvn test
-```
+``` 
 
 2) If Allure CLI is available locally, run:
 

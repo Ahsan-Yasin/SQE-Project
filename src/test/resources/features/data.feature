@@ -21,6 +21,10 @@ Feature: Data driven tests
     Given a database with products at "jdbc:mysql://localhost:3306/demo" and credentials "root"/"password"
     Then I can read product names from the database
 
+  Scenario: Read products using the configured test DB
+    Given a database is configured for tests
+    Then I can read product names from the database
+
   Scenario: Put and get a key in redis (example)
     Given a redis server at "localhost":6379 and a key "test_key" with value "hello"
     Then I should be able to read the value back from redis
