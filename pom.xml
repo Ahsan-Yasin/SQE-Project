@@ -51,6 +51,12 @@
             <version>7.32.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.32.0</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- TestNG -->
         <dependency>
@@ -96,6 +102,19 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- JUnit Platform suite API needed to create @Suite tests using cucumber JUnit platform engine -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.14.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>1.14.1</version>
+            <scope>test</scope>
+        </dependency>
         <!-- JUnit 4 useful for cucumber-junit runner -->
         <dependency>
             <groupId>junit</groupId>
@@ -139,3 +158,4 @@
     </build>
 
 </project>
+ 

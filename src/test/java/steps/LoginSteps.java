@@ -36,7 +36,6 @@ public class LoginSteps {
     @When("I logout")
     public void i_logout() throws InterruptedException {
         // open menu and click logout
-        var driver = inventoryPage; // use inventory to access driver via page
         // perform logout by clicking menu
         try {
             var d = inventoryPage;
@@ -48,10 +47,10 @@ public class LoginSteps {
         // we will perform click using raw driver since we did not add a separate header page
         try {
             var driverObj = Class.forName("base.BaseTest").getMethod("getDriver").invoke(null);
-            var driver = (org.openqa.selenium.WebDriver) driverObj;
-            driver.findElement(org.openqa.selenium.By.id("react-burger-menu-btn")).click();
+            var webDriver = (org.openqa.selenium.WebDriver) driverObj;
+            webDriver.findElement(org.openqa.selenium.By.id("react-burger-menu-btn")).click();
             Thread.sleep(500);
-            driver.findElement(org.openqa.selenium.By.id("logout_sidebar_link")).click();
+            webDriver.findElement(org.openqa.selenium.By.id("logout_sidebar_link")).click();
         } catch (Exception e) {
             throw new RuntimeException("Logout failed: " + e.getMessage());
         }
