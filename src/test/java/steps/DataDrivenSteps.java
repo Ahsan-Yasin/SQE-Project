@@ -91,14 +91,23 @@ public class DataDrivenSteps {
 
     @When("I read login rows from the Excel file")
     public void read_excel() throws Exception {
-        File f = new File("target/test-data/logins.xlsx");
+        // prefer committed test-data in src/test/resources/test-data, but fall back to target if present
+        File f = new File("src/test/resources/test-data/logins.xlsx");
+        if (!f.exists()) f = new File("src/test/resources/test-data/logins.csv");
+        if (!f.exists()) f = new File("target/test-data/logins.xlsx");
+        if (!f.exists()) {
+            throw new RuntimeException("No login test data found in src/test/resources/test-data or target/test-data");
+        }
         List<String[]> rows = ExcelUtils.readLoginData(f);
         Assert.assertTrue(rows.size() >= 1);
     }
 
     @Then("I can use those rows to login")
     public void use_rows_to_login() throws Exception {
-        File f = new File("target/test-data/logins.xlsx");
+        File f = new File("src/test/resources/test-data/logins.xlsx");
+        if (!f.exists()) f = new File("src/test/resources/test-data/logins.csv");
+        if (!f.exists()) f = new File("target/test-data/logins.xlsx");
+        if (!f.exists()) throw new RuntimeException("No login test data found for use_rows_to_login");
         List<String[]> rows = ExcelUtils.readLoginData(f);
         var first = rows.get(0);
         loginPage.open();

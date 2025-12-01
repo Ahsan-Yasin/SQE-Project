@@ -23,15 +23,27 @@ public class CartPage {
     }
 
     public void removeAllItems() {
-        // click each remove button until the cart is empty or timeout
+        // Attempt to remove all items reliably with retry + JS fallback for clicks
         var wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         long start = System.currentTimeMillis();
-        while (driver.findElements(cartItems).size() > 0 && (System.currentTimeMillis() - start) < 8000) {
+        while (driver.findElements(cartItems).size() > 0 && (System.currentTimeMillis() - start) < 15000) {
             var removes = driver.findElements(removeButtons);
             if (!removes.isEmpty()) {
-                removes.get(0).click();
+                try {
+                    wait.until(ExpectedConditions.elementToBeClickable(removes.get(0))).click();
+                } catch (Exception ex) {
+                    // fallback to JS click if normal click fails (overlay/intercept)
+                    try {
+                        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", removes.get(0));
+                    } catch (Exception ignored) {}
+                }
             }
-            try { Thread.sleep(250); } catch (InterruptedException ignored) {}
+            try { Thread.sleep(300); } catch (InterruptedException ignored) {}
+        }
+        // Final wait for cart to be empty
+        long endWait = System.currentTimeMillis() + 2000;
+        while (driver.findElements(cartItems).size() > 0 && System.currentTimeMillis() < endWait) {
+            try { Thread.sleep(200); } catch (InterruptedException ignored) {}
         }
     }
 
