@@ -10,99 +10,117 @@
     <artifactId>ui-automation</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- ✅ CENTRALIZED VERSIONS -->
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>21</java.version>
+        <cucumber.version>7.32.0</cucumber.version>
+        <allure.version>2.22.0</allure.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <!-- Selenium -->
+
+        <!-- ✅ Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.11.0</version>
         </dependency>
 
-        <!-- WebDriverManager to auto-manage ChromeDriver -->
+        <!-- ✅ WebDriverManager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.4.1</version>
         </dependency>
 
-        <!-- MySQL Connector -->
+        <!-- ✅ MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
 
-        <!-- Cucumber for testing -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>7.32.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>7.32.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>7.32.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- TestNG -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.8.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Jedis for Redis -->
+        <!-- ✅ Redis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>4.4.3</version>
         </dependency>
 
-        <!-- Apache POI for Excel -->
+        <!-- ✅ Apache POI -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.3</version>
         </dependency>
 
+        <!-- Cucumber + JUnit Platform engine for feature execution -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Allure core for attachments; we use our hooks to attach screenshots -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
-            <version>2.22.0</version>
-        </dependency>
+            <version>${allure.version}</version>
+        </dependency> 
+
+        <!-- Allure Cucumber adapter for Cucumber v7 (records tests / steps into allure-results) -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.22.0</version>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+            <!-- exclude transitive cucumber messages/gherkin that conflict with the project's cucumber-java version -->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>messages</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>gherkin</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <!-- Removed allure-junit-platform to avoid pulling older junit-jupiter APIs that conflict with project JUnit version -->
+
+        <!-- ✅ LOGGING -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.17</version>
         </dependency>
-
+           <!-- Add a JUnit Jupiter dependency that matches the junit-platform version used by the cucumber engine
+               so tests annotated with @Test (junit-jupiter) are executed correctly by Surefire's JUnitPlatformProvider. -->
+           <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter</artifactId>
+              <version>5.14.1</version>
+              <scope>test</scope>
+           </dependency>
+        <!-- JUnit 4 (some step implementations use org.junit.Assert) -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.10.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- JUnit Platform suite API needed to create @Suite tests using cucumber JUnit platform engine -->
+        <!-- JUnit Platform Suite API (for CucumberPlatformRunner) -->
+        <!-- Align JUnit Platform suite API with the Cucumber engine's platform version to avoid mixed-runtime
+             NoSuchMethodError where different platform/commons versions are on the classpath. -->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-api</artifactId>
@@ -110,37 +128,30 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-commons</artifactId>
-            <version>1.14.1</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- JUnit 4 useful for cucumber-junit runner -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- Add CDP support for Chrome version 142 -->
-        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-devtools-v142</artifactId>
             <version>4.38.0</version>
         </dependency>
 
     </dependencies>
+
     <build>
         <plugins>
+
+            <!-- ✅ FIXED COMPILER PLUGIN (YOUR WARNING IS GONE) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <compilerArgs>--enable-preview</compilerArgs>
+                    <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+
+            <!-- ✅ TESTNG + CUCUMBER RUNNER -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -150,12 +161,20 @@
                         <include>**/*Test*.java</include>
                         <include>**/*Tests*.java</include>
                         <include>**/*Test.java</include>
-                        <include>**/TestRunner.java</include>
+                        <include>**/CucumberPlatformRunner.java</include>
                     </includes>
+                    <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+
+            <!-- ✅ EXEC PLUGIN (FOR DocxReportWriter) -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+
         </plugins>
     </build>
 
 </project>
- 

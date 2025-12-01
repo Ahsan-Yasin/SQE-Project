@@ -2,7 +2,8 @@ Feature: Product and Cart actions
 
   Background:
     Given I am on the login page
-    When I login with username "standard_user" and password "secret_sauce"
+    Given login data is prepared
+    When I login using excel row 1
 
   Scenario: Open product details page
     Then I should be logged in

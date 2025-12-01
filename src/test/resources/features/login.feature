@@ -2,21 +2,22 @@ Feature: Login
 
   Background:
     Given I am on the login page
+    Given login data is prepared
 
-  Scenario: Login with valid credentials
-    When I login with username "standard_user" and password "secret_sauce"
+  Scenario: Login with valid credentials (from Excel)
+    When I login using excel row 1
     Then I should be logged in
 
-  Scenario: Login with invalid credentials
-    When I login with username "standard_user" and password "wrong_pass"
+  Scenario: Login with invalid credentials (from Excel)
+    When I login using excel row 3
     Then I should see a login error message
 
-  Scenario: Login with empty fields
-    When I login with username "" and password ""
+  Scenario: Login with empty fields (from Excel)
+    When I login using excel row 4
     Then I should see a login error message
 
   Scenario: Logout test
-    When I login with username "standard_user" and password "secret_sauce"
+    When I login using excel row 1
     Then I should be logged in
     When I logout
     # should be redirected back to login page

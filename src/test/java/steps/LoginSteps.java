@@ -4,13 +4,13 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import pages.InventoryPage;
+import pages.ProductsPage;
 import pages.LoginPage;
 
 public class LoginSteps {
 
     private final LoginPage loginPage = new LoginPage();
-    private final InventoryPage inventoryPage = new InventoryPage();
+    private final ProductsPage inventoryPage = new ProductsPage();
 
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {

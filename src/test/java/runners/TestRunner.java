@@ -1,15 +1,9 @@
 package runners;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
-
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        features = "src/test/resources/features",
-        glue = {"steps", "hooks"},
-        plugin = {"pretty", "json:target/cucumber.json"},
-        monochrome = true
-)
-public class TestRunner {
+/**
+ * Placeholder TestRunner removed in favour of JUnit Platform runner.
+ * The real runner is `CucumberPlatformRunner` which executes features via the JUnit Platform engine.
+ */
+public final class TestRunner {
+        private TestRunner() {}
 }

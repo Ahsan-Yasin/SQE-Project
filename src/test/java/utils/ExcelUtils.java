@@ -18,9 +18,11 @@ public class ExcelUtils {
         XSSFSheet sheet = workbook.createSheet("logins");
 
         String[][] data = {
-                {"username", "password"},
-                {"standard_user", "secret_sauce"},
-                {"locked_out_user", "secret_sauce"}
+            {"username", "password"},
+            {"standard_user", "secret_sauce"},
+            {"locked_out_user", "secret_sauce"},
+            {"wrong_user", "wrong_pass"},
+            {"", ""}
         };
 
         for (int r = 0; r < data.length; r++) {
@@ -42,6 +44,24 @@ public class ExcelUtils {
 
     public static List<String[]> readLoginData(File file) throws Exception {
         List<String[]> rows = new ArrayList<>();
+        String name = file.getName().toLowerCase();
+        // support CSV fallback so committed test-data can be plain-text and visible to TAs
+        if (name.endsWith(".csv")) {
+            try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file))) {
+                String line;
+                // skip header
+                boolean headerSkipped = false;
+                while ((line = br.readLine()) != null) {
+                    if (!headerSkipped) { headerSkipped = true; continue; }
+                    if (line.trim().isEmpty()) continue;
+                    String[] parts = line.split(",", -1);
+                    String u = parts.length > 0 ? parts[0].trim() : "";
+                    String p = parts.length > 1 ? parts[1].trim() : "";
+                    rows.add(new String[]{u, p});
+                }
+            }
+            return rows;
+        }
         try (FileInputStream fis = new FileInputStream(file); XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {

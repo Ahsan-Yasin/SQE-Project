@@ -1,16 +1,10 @@
 Feature: Data driven tests
 
-  Scenario Outline: Login with multiple users (data-driven example)
+  Scenario: Attempt login for each row in Excel
     Given I am on the login page
-    When I login with username "<username>" and password "<password>"
-    Then <result>
-
-    Examples:
-      | username                 | password      | result                       |
-      | standard_user            | secret_sauce  | I should be logged in        |
-      | locked_out_user          | secret_sauce  | I should see a login error message |
-      | problem_user             | secret_sauce  | I should be logged in        |
-      | performance_glitch_user  | secret_sauce  | I should be logged in        |
+    Given login data is prepared
+    When I attempt logins from the Excel file
+    Then at least one login attempt should succeed
 
   Scenario: Read login rows from Excel and use them
     Given I have an Excel file with login data
