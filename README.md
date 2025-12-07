@@ -1,48 +1,61 @@
-# Selenium Cucumber Test Framework
+# UITestAutomation - Sauce Demo Test Framework
 
-This is an automation test framework built using Selenium, Java, Cucumber, TestNG, and the Page Object Model (POM) design pattern. The framework is designed to facilitate automated testing of web applications.
+## Overview
+This is a comprehensive Web UI Test Automation Framework built with **Selenium 4**, **Java**, **Cucumber (BDD)**, **TestNG**, and **Maven**.
 
-## Table of Contents
+The framework automates **30+ test cases** for the **Sauce Labs demo e-commerce website** (https://www.saucedemo.com/).
 
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Running Tests](#running-tests)
-- [Reporting](#reporting)
-- [Contributing](#contributing)
-- [License](#license)
+## Key Features Implemented
 
-## Features
+### ✅ 30+ Automated Test Cases
+- **Login Tests** (7 scenarios): Valid/invalid credentials, empty fields, different user types
+- **Product Tests** (8 scenarios): Adding products to cart, verifying inventory
+- **Checkout Tests** (10 scenarios): Complete checkout flows, multiple products
+- **UI Validation Tests** (5+ scenarios): Page title verification
 
-- Supports BDD (Behavior Driven Development) using Cucumber.
-- Page Object Model (POM) for better maintainability and readability.
-- TestNG for test management and reporting.
-- ExtentReports for detailed reporting.
-- Parallel test execution support.
-- Easy integration with CI/CD pipelines.
+### ✅ Page Object Model (POM)
+Organized page objects:
+- `LoginPage.java` - Login interactions
+- `InventoryPage.java` - Products inventory
+- `CartPage.java` - Shopping cart
+- `CheckoutPage.java` - Checkout forms
 
-## Technologies Used
+### ✅ BDD with Cucumber
+- Feature files with Gherkin syntax
+- Step definitions in Java
+- Data-driven test support
+- Tag-based organization
 
-- **Java**: Programming language used for writing tests.
-- **Selenium**: Web automation framework for browser testing.
-- **Cucumber**: BDD framework for writing test scenarios in Gherkin language.
-- **TestNG**: Testing framework for managing test execution.
-- **WebDriverManager**: Automatically manages browser drivers.
-- **ExtentReports**: Reporting library for generating test reports.
+### ✅ Data Integration
+- **Apache POI** - Excel data reading
+- **H2 Database** - JDBC demo
+- **Jedis** - Redis client
 
-## Getting Started
+### ✅ Reporting & Screenshots
+- **Extent Reports** - HTML reports
+- **Cucumber Reports** - BDD reports
+- **Automatic Screenshots** - On failures to `target/allure-results/`
+
+## Technologies
+
+- Selenium WebDriver 4.27.0
+- Cucumber 7.20.1
+- TestNG 7.10.2
+- WebDriverManager 5.9.2
+- Apache POI 5.2.3
+- Extent Reports 5.1.2
+- Maven 3.6+
+
+## Setup
 
 ### Prerequisites
-
-- Java Development Kit (JDK) 8 or higher
-- Maven
-- Git
-- A web browser (e.g., Chrome, Firefox)
+- Java 8+ (tested with JDK 21)
+- Maven 3.6+
+- Chrome browser
+- Internet connection
 
 ### Installation
 
-1. Clone the repository:
-
+1. Clone repository:
    ```bash
    git clone https://github.com/GodBiz94/UITestAutomation.git

@@ -9,12 +9,14 @@
 
     <dependencies>
         <!-- Selenium Java -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
+       <dependency>
+        
+     
+           <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.27.0</version> <!-- Check for the latest version -->
         </dependency>
-
+            
         <!-- Cucumber Java -->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -57,5 +59,49 @@
             <artifactId>extentreports</artifactId>
             <version>5.1.2</version>
         </dependency>
-    </dependencies>
+        
+        <!-- Apache POI for Excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+
+        <!-- H2 Database for demo JDBC usage -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.1.214</version>
+        </dependency>
+
+        <!-- Jedis for Redis demo -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.4.3</version>
+        </dependency>
+
+        <!-- Allure Reporting -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.13.6</version>
+        </dependency> 
+        <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>2.0.9</version>
+</dependency>
+
+    </dependencies> 
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>2.12.0</version>
+        </plugin>
+    </plugins>
+</build>
+
 </project>
